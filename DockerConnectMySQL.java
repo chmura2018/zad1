@@ -1,11 +1,11 @@
 import java.sql.*;
 
-public class plik {
+public class DockerConnectMySQL {
    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
    static final String DB_URL = "jdbc:mysql://10.0.10.3:3306/baza";
 
-   static final String USER = "pkalasa";
-   static final String PASS = "root";
+   static final String USER = "atylec";
+   static final String PASS = "student";
    
    public static void main(String[] args) throws InterruptedException{
    Connection conn = null;
