@@ -1,4 +1,5 @@
-FROM java:8
+FROM java
+RUN apt-get update
 Label maintainers="Piotr Kalasa"
 COPY . /
 WORKDIR /
