@@ -1,4 +1,4 @@
-ROM java
+FROM java
 RUN apt-get update
 LABEL maintainers="Piotr Kalasa"
 COPY . /
