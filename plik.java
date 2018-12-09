@@ -11,36 +11,54 @@ public class plik {
    Connection conn = null;
    Statement stmt = null;
    try{
+	   System.out.println("Check if table in base exist");
+        DatabaseMetaData md = conn.getMetaData();
+        ResultSet rs = md.getTables(null, null, "Persons", null);
+        while (rs.next()) {
+            System.out.println("Table Exist");
+            baseExist = true;
+        }
       Class.forName("com.mysql.jdbc.Driver");
 
       System.out.println("Czekaj na połączenie...");
       conn = DriverManager.getConnection(DB_URL,USER,PASS);
+if(!baseExist){
+		stmt = conn.createStatement();
+			System.out.println("Creating Table");
+			stmt = conn.createStatement();
+			sql = "CREATE TABLE Tabela(id int, kolumna1 varchar(255), kolumna2 varchar(255), kolumna3 varchar(255))";
+			stmt.executeUpdate(sql);
+			stmt = null;
+}
+		
+		stmt = conn.createStatement();
+			System.out.println("Inserting Data to Table");
+			sql = "INSERT INTO Tabela (id, kolumna1, kolumna2, kolumna3) VALUES (1, 'tekst1', 'tekst2', 'tekst3'), (2, 'tresc1', 'tresc2', 'tresc3'), (3, 'tresc1', 'tresc2', 'tresc3')";
+			stmt.executeUpdate(sql);   
+			stmt = null;
 
-      stmt = conn.createStatement();
-      
-	stmt.executeUpdate("CREATE TABLE Tabela(id int, kolumna1 varchar(255), kolumna2 varchar(255), kolumna3 varchar(255));");
-	stmt.executeUpdate("INSERT INTO Tabela (id, kolumna1, kolumna2, kolumna3) VALUES (1, 'tekst1', 'tekst2', 'tekst3');");
-	stmt.executeUpdate("INSERT INTO Tabela (id, kolumna1, kolumna2, kolumna3) VALUES (2, 'tresc1', 'tresc2', 'tresc3');");
-	stmt.executeUpdate("INSERT INTO Tabela (id, kolumna1, kolumna2, kolumna3) VALUES (3, 'tresc1', 'tresc2', 'tresc3');");
+		stmt = conn.createStatement();
+			sql = "SELECT id, kolumna1, kolumna2, kolumna3 FROM Tabela";
+			result = stmt.executeQuery(sql);
 
-      ResultSet result = stmt.executeQuery("SELECT * FROM Tabela");
 
       while(result.next())
 	{
-         int id  = result.getInt("id");
-         String kol1 = result.getString("kolumna1");
-         String kol2 = result.getString("kolumna2");
-	 String kol3 = result.getString("kolumna3");
+        int id  = result.getInt("id");
+        String kol1 = result.getString("kolumna1");
+        String kol2 = result.getString("kolumna2");
+		String kol3 = result.getString("kolumna3");
 	
-	 System.out.print("ID: " +id);
-	 System.out.print(",kolumna1:" + kol1);
-	 System.out.print(",kolumna2:" + kol2);
-	 System.out.print(",kolumna3:" + kol3);
+		System.out.print("ID: " +id);
+		System.out.print(",kolumna1:" + kol1);
+		System.out.print(",kolumna2:" + kol2);
+		System.out.print(",kolumna3:" + kol3);
 
 	}
       result.close();
       stmt.close();
       conn.close();
+	  
      }catch(SQLException se){
         se.printStackTrace();
      }catch(Exception e){
