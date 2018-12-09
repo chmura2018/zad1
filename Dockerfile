@@ -1,7 +1,7 @@
-FROM java
+ROM java
 RUN apt-get update
-Label maintainers="Piotr Kalasa"
+LABEL maintainers="Piotr Kalasa"
 COPY . /
 WORKDIR /
 RUN javac DockerConnectMySQL.java
-CMD ["java", "-classpath", "mysql-connector-java-8.0.11.jar:.","DockerConnectMySQL"]
+CMD ["java", "-classpath", "mysql-connector-java-8.0.13.jar:.","DockerConnectMySQL"]
